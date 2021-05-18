@@ -3,15 +3,25 @@
 In this project, we built a specialized R program to crawl, parse and extract useful information from the G3-Genes Genomes Genetics journal.
 Given an input year, our objective is to extract all articles published in/after that year from the G3-Genes Genomes Genetics journal.
 Required to extract the following 9 fields for each article:
+
  •	Title
+ 
  •	Authors
+ 
  •	Author Affiliations
+ 
  •	Correspondence Author
+ 
  •	Correspondence Authors Email
+ 
  •	Publish Date
+ 
  •	Abstract
+ 
  •	Keywords
+ 
  •	Full Paper (Text format).
+ 
 
 
 Project1_journal_scraping R file
@@ -19,37 +29,58 @@ Project1_journal_scraping R file
 #install packages
 
 #package will load the core tidyverse packages:
+
 #ggplot2, for data visualisation.
+
 #dplyr, for data manipulation.
+
 #tidyr, for data tidying.
+
 #readr, for data import.
+
 #purrr, for functional programming.
+
 #tibble, for tibbles, a modern re-imagining of data frames.
+
 #stringr, for strings.
+
 #forcats, for factors.
+
 install.packages("tidyverse")
 
 #robotstxt - The package provides a simple ‘robotstxt’ class and accompanying methods to parse and check ‘robots.txt’ files.
+
 #Robots.txt files are a way to kindly ask webbots, spiders, crawlers, wanderers and the like to access or not access certain parts of a webpage.
+
 install.packages("robotstxt")
 
 #rvest - Wrappers around the 'xml2' and 'httr' packages to make it easy to download, then manipulate, HTML and XML
+
 install.packages("rvest")
 
 #xml2 - Work with XML files using a simple, consistent interface. Built on top of the 'libxml2' C library.
+
 install.packages("xml2")
 
 #lubridate - Lubridate makes it easier to do the things R does with date-times and possible to do the things R does not.
+
 install.packages("lubridate")
 
 
 #load packages
+
 library(tidyverse)
+
 library(robotstxt)
+
 library(rvest)
+
 library(selectr)
+
 library(xml2)
+
 library(magrittr)
+
 library(lubridate)
 
 g3_journal = function(year){
