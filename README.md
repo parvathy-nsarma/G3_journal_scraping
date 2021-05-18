@@ -83,51 +83,53 @@ library(magrittr)
 
 library(lubridate)
 
-g3_journal = function(year){
+    g3_journal = function(year){
   
-  #check if a bot has permissions to access page(s)
-  #paths for which to check bot's permission, defaults to "/".
-  #note that path to a folder should end with a trailing slash ("/").
+    #check if a bot has permissions to access page(s)
+    #paths for which to check bot's permission, defaults to "/".
+    #note that path to a folder should end with a trailing slash ("/").
   
-  paths_allowed(
+    paths_allowed(
     paths = c(paste("https://www.g3journal.org/content/by/year/",year))
-  )
+    )
   
-  #read_html - read in the content from a .html file.
-  load = read_html(paste("https://www.g3journal.org/content/by/year/",year))
+    #read_html - read in the content from a .html file.
+    load = read_html(paste("https://www.g3journal.org/content/by/year/",year))
 
-  #assign necessary vectors as empty vectors. 
-  doi = c()
-  title = c()
-  author = c()
-  affiliates = c()
-  corresp_author = c()
-  emails = c()
-  publish_date = c()
-  abstract = c()
-  keywords = c()
-  full_paper = c()
+    #assign necessary vectors as empty vectors. 
+    doi = c()
+    title = c()
+    author = c()
+    affiliates = c()
+    corresp_author = c()
+    emails = c()
+    publish_date = c()
+    abstract = c()
+    keywords = c()
+    full_paper = c()
   
-  #used html_nodes to extract pieces out of HTML documents.
-  #the '.' indicates the class
-  nodes = html_nodes(load, ".hw-issue-meta-data") 
-  #url for each month
-  month_url = nodes %>% 
+    #used html_nodes to extract pieces out of HTML documents.
+    #the '.' indicates the class
+    nodes = html_nodes(load, ".hw-issue-meta-data") 
+    #url for each month
+    month_url = nodes %>% html_attr("href")
     #extract attribute. The HREF is an attribute of the anchor tag, which is also used to identify sections within a document.
-    html_attr("href") 
+     
+    #url for each month as a vector
+    
+    indiv_url = c(month_url)
   
-  #url for each month as a vector
-  indiv_url = c(month_url)
+    #the number of months articles were published in the given year
+    
+    print(paste(length(month_url), " months of ","g3 Genes, Genomes and Genectics journals were published in ",year))
   
-  #the number of months articles were published in the given year
-  print(paste(length(month_url), " months of ","g3 Genes, Genomes and Genectics journals were published in ",year))
+    #assign base url
+    
+    base_url = "https://www.g3journal.org"
   
-  #assign base url
-  base_url = "https://www.g3journal.org"
+    #nested loop - loops through all article for each month of the given year.
   
-  #nested loop - loops through all article for each month of the given year.
-  
-  for(i in 1:length(indiv_url)){
+    for(i in 1:length(indiv_url)){
     
     #individual month link used to open all the journals for a month.
     #the gsub() function  used to replace the strings with input strings or values. 
@@ -301,10 +303,12 @@ g3_journal = function(year){
       #the gsub() function  used to replace the strings with input strings or values.
       Full_Paper = gsub(" ","",paste(article_url,".full"))
       full_paper = c(full_paper,Full_Paper)
+    }  
     }
-  }
-  #form a Data Frame from the vectors that were assigned earlier
-  Journal_File = data.frame(DOI=doi,
+    
+    #form a Data Frame from the vectors that were assigned earlier
+  
+    Journal_File = data.frame(DOI=doi,
                             Title=title,
                             Authors=author,
                             Author_Affiliations=affiliates,
@@ -315,22 +319,32 @@ g3_journal = function(year){
                             Keywords=keywords,
                             Full_Paper=full_paper)
   
-   #write the result into a csv file
-  write.csv(Journal_File,"C:/Users/Parvathy/OneDrive/Desktop/Data Analytics with R/G3.csv", row.names = FALSE)
-  #write the result into a text file
-  write.table(Journal_File,"C:/Users/Parvathy/OneDrive/Desktop/Data Analytics with R/G3.txt", sep = "\t", row.names = FALSE)
-}
+    #write the result into a csv file
+  
+    write.csv(Journal_File,"C:/Users/Parvathy/OneDrive/Desktop/Data Analytics with R/G3.csv", row.names = FALSE)
+  
+    #write the result into a text file
+  
+    write.table(Journal_File,"C:/Users/Parvathy/OneDrive/Desktop/Data Analytics with R/G3.txt", sep = "\t", row.names = FALSE)
+  
+    }
 
 #enter the year you want to scrape from the journal
+
 g3_journal(2020)
 
 read_output R file
 
 #read the output in csv form
+
 journal_csv = read.csv("C:/Users/Parvathy/OneDrive/Desktop/Data Analytics with R/G3.csv")
+
 #read the output in text form
+
 journal_txt = read.table("C:/Users/Parvathy/OneDrive/Desktop/Data Analytics with R/G3.txt", header = TRUE, sep = "\t")
 
 #displaying first few records
+
 head(journal_txt)
+
 head(journal_csv)
