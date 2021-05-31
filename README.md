@@ -24,7 +24,7 @@ Required to extract the following 9 fields for each article:
  
 
 
-Project1_journal_scraping R file
+# Project1_journal_scraping R file
 
 #install packages
 
