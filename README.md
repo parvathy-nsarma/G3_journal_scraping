@@ -1,4 +1,4 @@
-# G3_journal_scraping
+# Genes Genomes Genetics Journal Scraping
 
 In this project, we built a specialized R program to crawl, parse and extract useful information from the G3-Genes Genomes Genetics journal.
 Given an input year, our objective is to extract all articles published in/after that year from the G3-Genes Genomes Genetics journal.
